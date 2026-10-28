@@ -1,0 +1,19 @@
+{
+  "name": "guildhall-whispers",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A server-authoritative multiplayer trading game.",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server/index.js",
+    "start": "node server/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  }
+}

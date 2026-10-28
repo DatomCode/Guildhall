@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guildhall Whispers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css?v=2" />
+  </head>
+  <body>
+    <section id="tutorial" class="tutorial" hidden aria-modal="true" role="dialog" aria-labelledby="tutorial-title">
+      <div class="tutorial-sheet">
+        <p id="tutorial-step" class="eyebrow"></p>
+        <h2 id="tutorial-title"></h2>
+        <p id="tutorial-copy" class="tutorial-copy"></p>
+        <div id="practice-card" class="practice-card" hidden>
+          <p class="practice-stamp">Practice round · no scoring</p>
+          <p>Salt <strong>50 crowns</strong> <span class="price-rose">↑ Rose</span></p>
+          <p>Choose your orders in the real market. This rehearsal changes nothing.</p>
+        </div>
+        <div class="tutorial-actions">
+          <button id="tutorial-next" class="wax">Next</button>
+          <button id="tutorial-skip" class="outline">Skip briefing</button>
+        </div>
+      </div>
+    </section>
+    <main class="ledger">
+      <section id="landing" aria-labelledby="title">
+        <p class="eyebrow">A game of rumors and trade</p>
+        <h1 id="title">Guildhall<br />Whispers</h1>
+        <p class="pitch">Four goods. One secret each.<br />Trust no one, trade anyway.</p>
+
+        <form id="join-form" novalidate>
+          <label for="name">Merchant name</label>
+          <input id="name" name="name" minlength="2" maxlength="14" autocomplete="nickname" required />
+          <label for="code">Guildhall code</label>
+          <input id="code" name="code" maxlength="4" autocapitalize="characters" autocomplete="off" />
+          <button type="submit" class="wax">Take your seat</button>
+        </form>
+
+        <div class="divider"><span>or</span></div>
+        <button id="host-button" class="outline">Open the hall <span>(host)</span></button>
+        <button id="bots-button" class="outline">Play with bots <span>(3 merchants)</span></button>
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section id="lobby" hidden aria-live="polite">
+        <p class="eyebrow">Guildhall code</p>
+        <output id="room-code" class="room-code"></output>
+        <h2>The merchants gather</h2>
+        <p id="lobby-count"></p>
+        <ul id="merchant-list" class="merchant-list"></ul>
+        <label for="round-count">Rounds</label>
+        <select id="round-count" aria-label="Number of rounds">
+          <option value="3">3 rounds</option>
+          <option value="5" selected>5 rounds</option>
+        </select>
+        <p id="host-note" class="host-note"></p>
+        <button id="start-button" class="wax" hidden>Open the market</button>
+        <p id="lobby-message" class="message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section id="game" hidden aria-live="polite">
+        <p id="game-round" class="eyebrow"></p>
+        <h2 id="phase-title"></h2>
+        <p id="countdown" class="countdown" aria-live="polite"></p>
+
+        <button id="whisper-note" class="note" hidden>
+          <span class="note-closed">Tap to unfold</span>
+          <span id="whisper-text" class="note-open" hidden></span>
+        </button>
+        <p id="whisper-help" class="whisper-help" hidden>Only you can see this.<br />It may not be true.</p>
+
+        <section id="market-panel" hidden>
+          <table class="market-table" aria-label="Market prices and your holdings">
+            <thead>
+              <tr><th>Good</th><th>Price</th><th>Own</th><th>Order</th></tr>
+            </thead>
+            <tbody id="market-rows"></tbody>
+          </table>
+          <button id="seal-button" class="wax seal-btn"><span>Seal Orders</span><b aria-hidden="true">✦</b></button>
+          <p id="order-message" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section id="rumor-board" hidden aria-label="Rumor board">
+          <div class="rumor-divider"><span>Rumor Board</span></div>
+          <ul id="rumor-feed" class="rumor-feed" aria-live="polite" aria-relevant="additions"></ul>
+          <div id="rumor-post" class="rumor-post">
+            <label for="rumor-good" class="sr-only">Good</label>
+            <select id="rumor-good" aria-label="Good">
+              <option value="salt">Salt</option>
+              <option value="wool">Wool</option>
+              <option value="amber">Amber</option>
+              <option value="indigo">Indigo</option>
+            </select>
+            <label for="rumor-direction" class="sr-only">Direction</label>
+            <select id="rumor-direction" aria-label="Direction">
+              <option value="rise">will Rise</option>
+              <option value="fall">will Fall</option>
+              <option value="hold">will Hold</option>
+            </select>
+            <button id="rumor-post-btn" class="wax rumor-btn">Post</button>
+          </div>
+          <p id="rumor-message" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <div id="phase-copy" class="phase-copy"></div>
+        <div id="market-results" class="market-results" hidden></div>
+        <section id="ledger-card" class="ledger-card" hidden></section>
+        <section id="final-standings" class="final-standings" hidden></section>
+        <button id="play-again" class="wax" hidden>Play again</button>
+      </section>
+    </main>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

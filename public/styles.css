@@ -1,0 +1,282 @@
+:root {
+  --parchment: #EBDDBB;
+  --oxblood: #6E1F2B;
+  --oak: #5B3A24;
+  --verdigris: #3F7F73;
+  --iron: #2A2623;
+  color: var(--iron);
+  background: #5b3a24;
+  font-family: "Courier Prime", monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: radial-gradient(circle at top, #855f3d, #3d2417 70%);
+}
+
+.ledger {
+  width: min(100%, 500px);
+  min-height: 620px;
+  padding: clamp(28px, 8vw, 52px);
+  position: relative;
+  background: repeating-linear-gradient(var(--parchment) 0 30px, #c8b68d 31px 32px, var(--parchment) 33px 34px);
+  border: 10px solid #6e1f2b;
+  box-shadow: 0 14px 0 #3c201b, 0 22px 38px #1b110c99;
+}
+
+.ledger::before,
+.ledger::after {
+  position: absolute;
+  inset: 13px;
+  border-block: 3px double var(--oak);
+  content: "";
+  pointer-events: none;
+}
+.ledger::after { inset: 18px; border-block-width: 1px; opacity: .55; }
+.ledger > * { position: relative; z-index: 1; }
+
+h1, h2 { font-family: "IM Fell English SC", serif; margin: 0; text-align: center; }
+h1 { font-size: clamp(3rem, 13vw, 4.6rem); line-height: .8; color: #6e1f2b; }
+h2 { font-size: 2.2rem; margin-top: 22px; }
+.eyebrow, .pitch, .message, .host-note { text-align: center; }
+.eyebrow { margin: 0 0 14px; font-size: .78rem; text-transform: uppercase; letter-spacing: .14em; }
+.pitch { margin: 30px 0; line-height: 1.55; }
+form { display: grid; gap: 8px; }
+label { margin-top: 8px; font-size: .85rem; font-weight: bold; }
+input, select, button { min-height: 48px; border-radius: 0; font: inherit; }
+input, select { padding: 10px; border: 2px solid #5b3a24; background: #f5e9ca; color: #2a2623; }
+button { width: 100%; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: .05em; }
+button:disabled { cursor: not-allowed; opacity: .55; }
+.wax { margin-top: 14px; border: 0; color: #f7ebcd; background: #6e1f2b; box-shadow: 0 4px 0 #43121a; }
+.outline { border: 2px solid #6e1f2b; color: #6e1f2b; background: transparent; }
+.outline span { font-size: .75em; }
+#bots-button { margin-top: 10px; border-color: var(--verdigris); color: var(--verdigris); }
+.divider { display: grid; place-items: center; margin: 24px 0; border-top: 1px solid #927d55; }
+.divider span { padding: 0 10px; background: #ebddbb; transform: translateY(-50%); }
+.message { min-height: 22px; color: #6e1f2b; font-size: .85rem; }
+.room-code { display: block; margin: 4px 0 24px; text-align: center; color: #6e1f2b; font-size: clamp(2.5rem, 12vw, 4rem); font-weight: bold; letter-spacing: .18em; }
+.merchant-list { margin: 22px 0; padding: 0; list-style: none; border-block: 2px solid #5b3a24; }
+.merchant-list li { padding: 12px 4px; border-bottom: 1px dotted #5b3a24; }
+.merchant-list li:last-child { border-bottom: 0; }
+.countdown { text-align: center; font-weight: bold; color: #6e1f2b; }
+.note { min-height: 160px; margin: 22px 0 10px; padding: 24px; border: 2px dashed #6e1f2b; color: #6e1f2b; background: #f5e9ca; font-family: "IM Fell English SC", serif; font-size: 1.6rem; }
+.note.unfolded { border-style: solid; transform: rotate(-1deg); }
+.whisper-help, .phase-copy { text-align: center; line-height: 1.5; }
+.market-results { margin-top: 24px; border-block: 2px solid #5b3a24; }
+.market-results p { margin: 0; padding: 10px 0; border-bottom: 1px dotted #5b3a24; }
+.market-results p:last-child { border-bottom: 0; }
+
+/* ── Market panel (TRADE phase) ─────────────────────────────── */
+#market-panel { margin-top: 20px; }
+
+.market-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+.market-table th,
+.market-table td {
+  padding: 8px 4px;
+  border-bottom: 1px dotted #5b3a24;
+  text-align: center;
+}
+.market-table th {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: #6e1f2b;
+  border-bottom: 2px solid #5b3a24;
+}
+.market-table td:first-child { text-align: left; }
+
+.stepper-btn {
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  border: 2px solid #6e1f2b;
+  background: #f5e9ca;
+  color: #6e1f2b;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+.stepper-btn:disabled { opacity: .4; cursor: not-allowed; }
+.stepper-btn:not(:disabled):hover { background: #6e1f2b; color: #f7ebcd; }
+
+.stepper-val {
+  display: inline-block;
+  min-width: 36px;
+  text-align: center;
+  font-weight: bold;
+  vertical-align: middle;
+}
+.stepper-buy { color: #1a5e1a; }
+.stepper-sell { color: #6e1f2b; }
+
+.seal-btn {
+  position: relative;
+  overflow: hidden;
+}
+.seal-btn b {
+  display: inline-grid;
+  width: 0;
+  margin-left: 7px;
+  overflow: hidden;
+  color: #EBDDBB;
+  transition: width .15s ease, transform .15s ease;
+}
+.seal-btn:active {
+  transform: scale(.94) rotate(-1deg);
+  box-shadow: 0 1px 0 #43121a;
+}
+.seal-btn:active b { width: 18px; transform: rotate(22deg) scale(1.5); }
+
+.order-rejected { color: #6e1f2b; font-size: .85rem; }
+.order-rejected-list {
+  margin-top: 12px;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+/* ── Rumor Board (TRADE phase) ─────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+#rumor-board {
+  margin-top: 24px;
+}
+
+.rumor-divider {
+  display: grid;
+  place-items: center;
+  margin: 18px 0 12px;
+  border-top: 1px dashed #927d55;
+}
+.rumor-divider span {
+  padding: 0 10px;
+  background: #ebddbb;
+  transform: translateY(-50%);
+  font-size: .85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: #6e1f2b;
+}
+
+.rumor-feed {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  border-block: 1px dotted #5b3a24;
+  min-height: 48px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+.rumor-feed li {
+  padding: 6px 4px;
+  border-bottom: 1px dotted #bba980;
+  font-size: .85rem;
+  text-align: left;
+}
+.rumor-feed li:last-child {
+  border-bottom: none;
+}
+.rumor-feed .empty-rumors {
+  color: #7a6e65;
+  font-style: italic;
+  text-align: center;
+  padding: 12px 0;
+}
+
+.rumor-post {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 6px;
+  margin-top: 8px;
+}
+.rumor-post select {
+  min-height: 44px;
+  padding: 6px;
+  font-size: .85rem;
+}
+.rumor-btn {
+  margin-top: 0;
+  min-height: 44px;
+  padding: 0 16px;
+  width: auto;
+}
+
+.rumor-result-true {
+  color: var(--verdigris);
+  font-weight: bold;
+}
+.rumor-result-false {
+  color: #6e1f2b;
+  font-weight: bold;
+}
+
+.market-results p { animation: market-flip .45s ease both; }
+.market-results p:nth-child(2) { animation-delay: .12s; }
+.market-results p:nth-child(3) { animation-delay: .24s; }
+.market-results p:nth-child(4) { animation-delay: .36s; }
+@keyframes market-flip { from { opacity: 0; transform: rotateX(90deg); } to { opacity: 1; transform: rotateX(0); } }
+.ledger-card, .final-standings { margin-top: 22px; border: 2px solid #5b3a24; padding: 12px; }
+.ledger-card p { display: flex; justify-content: space-between; gap: 12px; margin: 8px 0; }
+.final-standings h3 { font-family: "IM Fell English SC", serif; font-size: 1.7rem; margin: 0 0 10px; text-align: center; }
+.final-standings ol { margin: 0; padding-left: 24px; }
+.final-standings li { margin: 8px 0; }
+
+/* ── Clerk's candlelit ledger refinements ───────────────────── */
+#market-panel, #rumor-board, .ledger-card, .final-standings {
+  background: color-mix(in srgb, var(--parchment) 82%, white);
+  box-shadow: inset 0 0 0 1px #8c704d;
+}
+#market-panel { padding: 12px; border-block: 3px double var(--oak); }
+.market-table td:nth-child(2), .room-code, .countdown, .ledger-card span { font-variant-numeric: tabular-nums; }
+.price-rose { color: var(--verdigris); }
+.price-fell { color: var(--iron); }
+.price-held { color: var(--oak); }
+.market-results .price-rose::first-letter, .market-results .price-fell::first-letter { font-weight: bold; }
+
+.tutorial {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: #2a2623cc;
+}
+.tutorial[hidden] { display: none; }
+.tutorial-sheet {
+  width: min(100%, 460px);
+  padding: 34px;
+  color: var(--iron);
+  background: repeating-linear-gradient(var(--parchment) 0 30px, #c8b68d 31px 32px, var(--parchment) 33px 34px);
+  border: 9px solid var(--oxblood);
+  box-shadow: 0 12px 0 #3c201b, 0 24px 45px #0008;
+}
+.tutorial-copy { min-height: 86px; text-align: center; font-size: 1.05rem; line-height: 1.6; }
+.tutorial-actions { display: grid; gap: 10px; }
+.tutorial-actions .outline { background: #ebddbb; }
+.practice-card { margin: 18px 0; padding: 14px; border: 3px double var(--oak); background: #f6ebcf; text-align: center; }
+.practice-card p { margin: 9px 0; }
+.practice-stamp { color: var(--oxblood); font-weight: bold; letter-spacing: .07em; text-transform: uppercase; }
