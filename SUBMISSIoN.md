@@ -14,9 +14,8 @@ Guildhall Whispers: A Game of Rumors and Trade
 
 ## b. Project cover image
 
-![Guildhall Whispers cover](guildhall_cover_img.jpg)
+![Guildhall Whispers cover](guildhall_cover_img.png)
 
-Upload `guildhall_cover_image.jpg` from this folder.
 
 ## c. Project description
 
